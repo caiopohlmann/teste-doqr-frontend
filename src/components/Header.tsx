@@ -7,7 +7,7 @@ const Header = () => {
           <h1 className="text-base font-bold ml-2 text-black">Teste Doqr</h1>
         </div>
         <div className="flex items-center">
-          <div className="w-6 h-6 bg-primary rounded-full" />
+          <div className="w-6 h-6 bg-primary2 rounded-full" />
           <h1 className="text-base font-semibold ml-2 text-black">Caio</h1>
         </div>
       </nav>
