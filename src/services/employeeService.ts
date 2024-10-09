@@ -1,5 +1,5 @@
 import apiClient from '@/api/client';
-import { Employee } from '@/components/Table';
+import { Employee } from '@/components/EmployeeTable';
 
 export const employeeService = {
   getAll: async (): Promise<Employee[]> => {

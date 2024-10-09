@@ -1,7 +1,8 @@
 import { Suspense } from 'react';
 import Plus from "@/assets/icons/Plus";
-import EmployeeTable from "@/components/Table";
+import EmployeeTable from "@/components/EmployeeTable";
 import { employeeService } from "@/services/employeeService";
+import Link from 'next/link';
 
 const headers = [
   "Nome",
@@ -45,10 +46,10 @@ const EmployeeDashboard = () => {
       <div className="flex items-center justify-between mt-8">
         <input type="text" placeholder="Buscar Funcionário..." className="w-full max-w-96 py-2 pl-3 rounded-md border border-gray" />
 
-        <button className="bg-primary text-white px-4 py-2 rounded-md ml-4 flex items-center gap-2">
+        <Link href="/cadastrar-funcionario" className="bg-primary text-white px-4 py-2 rounded-md ml-4 flex items-center gap-2">
           <Plus />
           Novo Funcionário
-        </button>
+        </Link>
       </div>
 
       <Suspense fallback={<EmployeeTableLoader />}>
