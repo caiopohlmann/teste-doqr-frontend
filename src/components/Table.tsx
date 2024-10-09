@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Edit from "@/assets/icons/Edit";
 import Trash from "@/assets/icons/Trash";
 
-interface Employee {
+export interface Employee {
   id: number;
   name: string;
   email: string;
