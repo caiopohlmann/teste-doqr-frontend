@@ -8,7 +8,6 @@ import EmployeeForm from '@/components/EmployeeForm';
 import DeleteEmployeeModal from '@/components/DeleteEmployeeModal';
 import Link from 'next/link';
 import Arrow from '@/assets/icons/Arrow';
-import { toast } from 'react-toastify';
 
 const EditarFuncionario = ({ params }: { params: { id: string } }) => {
   const [employee, setEmployee] = useState<Employee | null>(null);
@@ -39,11 +38,9 @@ const EditarFuncionario = ({ params }: { params: { id: string } }) => {
   const handleDeleteConfirm = async () => {
     try {
       await employeeService.delete(employee.id);
-      toast.success('Funcionário excluído com sucesso');
       router.push('/');
     } catch (error) {
       console.error('Error deleting employee:', error);
-      toast.error('Erro ao excluir funcionário. Por favor, tente novamente.');
     } finally {
       setDeleteModalOpen(false);
     }
@@ -64,11 +61,9 @@ const EditarFuncionario = ({ params }: { params: { id: string } }) => {
         onSubmit={async (updatedEmployee: Partial<Employee>) => {
           try {
             await employeeService.update(employee.id, updatedEmployee as Employee);
-            toast.success('Funcionário atualizado com sucesso!');
             router.push('/');
           } catch (error) {
             console.error('Error updating employee:', error);
-            toast.error('Erro ao atualizar funcionário. Por favor, tente novamente.');
           }
         }}
         onDeleteClick={handleDeleteClick}

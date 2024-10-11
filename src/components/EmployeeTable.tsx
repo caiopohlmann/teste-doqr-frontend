@@ -4,7 +4,6 @@ import Edit from "@/assets/icons/Edit";
 import Trash from "@/assets/icons/Trash";
 import Link from 'next/link';
 import { employeeService } from '@/services/employeeService';
-import { toast } from 'react-toastify';
 
 export interface Employee {
   id: number;
@@ -54,9 +53,7 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ headers, employees, rowsP
         await employeeService.delete(employeeToDelete);
         onEmployeeDeleted(employeeToDelete);
         closeDeleteDialog();
-        toast.success('Funcionário excluído com sucesso');
       } catch (error) {
-        toast.error('Erro ao excluir funcionário. Por favor, tente novamente.');
       }
     }
   };
