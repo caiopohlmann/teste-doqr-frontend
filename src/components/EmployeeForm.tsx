@@ -7,18 +7,28 @@ import Chevron from '@/assets/icons/Chevron';
 interface EmployeeFormProps {
   initialData?: Partial<Employee>;
   onSubmit: (employee: Partial<Employee>) => void;
+  onDeleteClick?: () => void;
   isEditing?: boolean;
 }
 
-const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData = {}, onSubmit, isEditing = false }) => {
-  const [employee, setEmployee] = useState<Partial<Employee>>(initialData);
+const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData = {}, onSubmit, onDeleteClick, isEditing = false }) => {
+  const [employee, setEmployee] = useState<Partial<Employee>>(() => {
+    if (initialData.dateOfBirth) {
+      const date = new Date(initialData.dateOfBirth);
+      return {
+        ...initialData,
+        dateOfBirth: date.toISOString().split('T')[0]
+      };
+    }
+    return initialData;
+  });
   const [errors, setErrors] = useState<Partial<Record<keyof Employee, boolean>>>({});
   const [isStatusOpen, setIsStatusOpen] = useState(false);
   const [isContractTypeOpen, setIsContractTypeOpen] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    if (name === 'phone') {
+    if (name === 'phoneNumber') {
       const maskedValue = maskPhone(value);
       setEmployee({ ...employee, [name]: maskedValue });
     } else if (name === 'cpf') {
@@ -28,7 +38,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData = {}, onSubmit,
       setEmployee({ ...employee, [name]: value });
     }
   };
-
+  
   const maskPhone = (value: string) => {
     const numericValue = value.replace(/\D/g, '');
     const match = numericValue.match(/^(\d{0,2})(\d{0,5})(\d{0,4})$/);
@@ -63,16 +73,16 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData = {}, onSubmit,
       newErrors.cpf = true;
       isValid = false;
     }
-    if (!employee.phone || employee.phone.length !== 15) {
-      newErrors.phone = true;
+    if (!employee.phoneNumber || employee.phoneNumber.length !== 15) {
+      newErrors.phoneNumber = true;
       isValid = false;
     }
-    if (!employee.birthDate) {
-      newErrors.birthDate = true;
+    if (!employee.dateOfBirth) {
+      newErrors.dateOfBirth = true;
       isValid = false;
     }
-    if (!employee.contractType) {
-      newErrors.contractType = true;
+    if (!employee.employmentType) {
+      newErrors.employmentType = true;
       isValid = false;
     }
     // @ts-expect-error - status is a boolean
@@ -144,9 +154,9 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData = {}, onSubmit,
                 <label htmlFor="phone" className="block text-base font-medium text-black">Celular</label>
                 <input
                   type="tel"
-                  id="phone"
-                  name="phone"
-                  value={employee.phone}
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  value={employee.phoneNumber}
                   onChange={handleInputChange}
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2"
                   placeholder="(99) 99999-9999"
@@ -158,11 +168,11 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData = {}, onSubmit,
                 <label htmlFor="birthDate" className="block text-base font-medium text-black">Data de Nascimento</label>
                 <input
                   type="date"
-                  id="birthDate"
-                  name="birthDate"
-                  value={employee.birthDate}
+                  id="dateOfBirth"
+                  name="dateOfBirth"
+                  value={employee.dateOfBirth}
                   onChange={handleInputChange}
-                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2 ${employee.birthDate === '' ? 'text-[#B9B9C1] font-medium' : 'text-black'}`}
+                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2 ${employee.dateOfBirth === '' ? 'text-[#B9B9C1] font-medium' : 'text-black'}`}
                   required
                 />
               </div>
@@ -170,14 +180,14 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData = {}, onSubmit,
                 <label htmlFor="contractType" className="block text-base font-medium text-black">Tipo de Contratação</label>
                 <div className="relative">
                   <select
-                    id="contractType"
-                    name="contractType"
-                    value={employee.contractType}
+                    id="employmentType"
+                    name="employmentType"
+                    value={employee.employmentType}
                     onChange={(e) => {
                       handleInputChange(e)
                       setIsContractTypeOpen(false)
                     }}
-                    className={`mt-1 cursor-pointer appearance-none block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2 ${employee.contractType === '' ? 'text-[#B9B9C1] font-medium' : 'text-black'}`}
+                    className={`mt-1 cursor-pointer appearance-none block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2 ${employee.employmentType === '' ? 'text-[#B9B9C1] font-medium' : 'text-black'}`}
                     onFocus={() => setIsContractTypeOpen(true)}
                     onBlur={() => setIsContractTypeOpen(false)}
                     required
@@ -222,7 +232,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData = {}, onSubmit,
               </div>
               <div className="col-span-3">
                 {isEditing && (
-                  <button type="button" className="bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-300 mr-2">
+                  <button onClick={onDeleteClick} type="button"  className="bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-300 mr-2">
                     Excluir
                   </button>
                 )}

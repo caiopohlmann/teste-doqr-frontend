@@ -3,15 +3,17 @@ import React, { useState } from 'react';
 import Edit from "@/assets/icons/Edit";
 import Trash from "@/assets/icons/Trash";
 import Link from 'next/link';
+import { employeeService } from '@/services/employeeService';
+import { toast } from 'react-toastify';
 
 export interface Employee {
   id: number;
   name: string;
   email: string;
   cpf: string;
-  phone: string;
-  birthDate: string;
-  contractType: string;
+  phoneNumber: string;
+  dateOfBirth: string;
+  employmentType: string;
   status: boolean;
 }
 
@@ -19,9 +21,19 @@ interface EmployeeTableProps {
   headers: string[];
   employees: Employee[];
   rowsPerPage: number;
+  onEmployeeDeleted: (employeeId: number) => void;
 }
 
-const EmployeeTable: React.FC<EmployeeTableProps> = ({ headers, employees, rowsPerPage }) => {
+const formatDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+};
+
+
+const EmployeeTable: React.FC<EmployeeTableProps> = ({ headers, employees, rowsPerPage, onEmployeeDeleted }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [employeeToDelete, setEmployeeToDelete] = useState<number | null>(null);
@@ -36,9 +48,17 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ headers, employees, rowsP
     setEmployeeToDelete(null);
   };
 
-  const confirmDelete = () => {
-    console.log(`Excluindo funcionário com ID: ${employeeToDelete}`);
-    closeDeleteDialog();
+  const confirmDelete = async () => {
+    if (employeeToDelete) {
+      try {
+        await employeeService.delete(employeeToDelete);
+        onEmployeeDeleted(employeeToDelete);
+        closeDeleteDialog();
+        toast.success('Funcionário excluído com sucesso');
+      } catch (error) {
+        toast.error('Erro ao excluir funcionário. Por favor, tente novamente.');
+      }
+    }
   };
 
   const totalPages = Math.ceil(employees.length / rowsPerPage);
@@ -70,12 +90,12 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ headers, employees, rowsP
                 <td className="p-4 font-normal text-sm whitespace-nowrap">{employee.name}</td>
                 <td className="p-4 font-normal text-sm whitespace-nowrap">{employee.email}</td>
                 <td className="p-4 font-normal text-sm whitespace-nowrap">{employee.cpf}</td>
-                <td className="p-4 font-normal text-sm whitespace-nowrap">{employee.phone}</td>
-                <td className="p-4 font-normal text-sm whitespace-nowrap">{employee.birthDate}</td>
-                <td className="p-4 font-normal text-sm whitespace-nowrap">{employee.contractType}</td>
+                <td className="p-4 font-normal text-sm whitespace-nowrap">{employee.phoneNumber}</td>
+                <td className="p-4 font-normal text-sm whitespace-nowrap">{formatDate(employee.dateOfBirth)}</td>
+                <td className="p-4 font-normal text-sm whitespace-nowrap">{employee.employmentType}</td>
                 <td className="p-4 font-medium text-sm whitespace-nowrap">
-                  <span className={`${employee.status ? (employee.name === 'Caio' ? 'bg-primary text-white font-bold' : 'bg-greenTable text-greenTable') : 'bg-redTable text-redTable'} p-2 rounded-full`}>
-                    {employee.status ? (employee.name === 'Caio' ? "Pendente" : "Ativo") : "Inativo"}
+                  <span className={`${employee.status ? (employee.name === 'Caio Pohlmann' ? 'bg-primary text-white font-bold' : 'bg-greenTable text-greenTable') : 'bg-redTable text-redTable'} p-2 rounded-full`}>
+                    {employee.status ? (employee.name === 'Caio Pohlmann' ? "Pendente" : "Ativo") : "Inativo"}
                   </span>
                 </td>
                 <td className="p-4">

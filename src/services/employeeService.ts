@@ -3,35 +3,13 @@ import { Employee } from '@/components/EmployeeTable';
 
 export const employeeService = {
   getAll: async (): Promise<Employee[]> => {
-    // const response = await apiClient.get('/Employees');
-    // return response.data;
-    return [
-      {
-        id: 1,
-        name: 'Caio',
-        email: 'john.doe@example.com',
-        cpf: '123.456.789-00',
-        phone: '(11) 99999-9999',
-        birthDate: '1990-01-01',
-        contractType: 'CLT',
-        status: true,
-      },
-    ];
+    const response = await apiClient.get('/employees');
+    return response.data;
   },
   
   getById: async (id: number) => {
-    // const response = await apiClient.get(`/employees/${id}`);
-    // return response.data;
-    return {
-      id: 1,
-      name: 'Caio',
-      email: 'john.doe@example.com',
-      cpf: '123.456.789-00',
-      phone: '(11) 99999-9999',
-      birthDate: '1990-01-01',
-      contractType: 'CLT',
-      status: true,
-    };
+    const response = await apiClient.get(`/employees/${id}`);
+    return response.data;
   },
   
   create: async (employeeData: Employee) => {
@@ -46,6 +24,13 @@ export const employeeService = {
   
   delete: async (id: number) => {
     const response = await apiClient.delete(`/employees/${id}`);
+    return response.data;
+  },
+  
+  search: async (searchTerm: string): Promise<Employee[]> => {
+    const response = await apiClient.get('/employees', {
+      params: { name: searchTerm }
+    });
     return response.data;
   },
 };
