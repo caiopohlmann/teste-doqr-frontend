@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import Edit from "@/assets/icons/Edit";
 import Trash from "@/assets/icons/Trash";
+import Link from 'next/link';
 
 export interface Employee {
   id: number;
@@ -22,6 +23,23 @@ interface EmployeeTableProps {
 
 const EmployeeTable: React.FC<EmployeeTableProps> = ({ headers, employees, rowsPerPage }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [employeeToDelete, setEmployeeToDelete] = useState<number | null>(null);
+
+  const openDeleteDialog = (employeeId: number) => {
+    setEmployeeToDelete(employeeId);
+    setDeleteDialogOpen(true);
+  };
+
+  const closeDeleteDialog = () => {
+    setDeleteDialogOpen(false);
+    setEmployeeToDelete(null);
+  };
+
+  const confirmDelete = () => {
+    console.log(`Excluindo funcionário com ID: ${employeeToDelete}`);
+    closeDeleteDialog();
+  };
 
   const totalPages = Math.ceil(employees.length / rowsPerPage);
   const startIndex = (currentPage - 1) * rowsPerPage;
@@ -62,10 +80,13 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ headers, employees, rowsP
                 </td>
                 <td className="p-4">
                   <div className="flex gap-2">
-                    <button className="p-1 text-blue-600 hover:text-blue-800">
+                    <Link href={`/editar-funcionario/${employee.id}`} className="p-1 text-blue-600 hover:text-blue-800">
                       <Edit />
-                    </button>
-                    <button className="p-1 text-red-600 hover:text-red-800">
+                    </Link>
+                    <button 
+                      className="p-1 text-red-600 hover:text-red-800"
+                      onClick={() => openDeleteDialog(employee.id)}
+                    >
                       <Trash />
                     </button>
                   </div>
@@ -96,6 +117,29 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ headers, employees, rowsP
           </button>
         </div>
       </div>
+
+      {deleteDialogOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300 ease-in-out">
+          <div className="bg-white p-6 rounded-lg shadow-xl transform transition-all duration-300 ease-in-out scale-90 opacity-0 animate-dialog">
+            <h2 className="text-xl font-bold mb-4">Confirmar exclusão</h2>
+            <p className="mb-4">Tem certeza que deseja excluir este funcionário?</p>
+            <div className="flex justify-end gap-2">
+              <button
+                className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors"
+                onClick={closeDeleteDialog}
+              >
+                Cancelar
+              </button>
+              <button
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                onClick={confirmDelete}
+              >
+                Excluir
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

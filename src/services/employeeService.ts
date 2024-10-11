@@ -3,24 +3,35 @@ import { Employee } from '@/components/EmployeeTable';
 
 export const employeeService = {
   getAll: async (): Promise<Employee[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    // const response = await apiClient.get('/Employees');
+    // return response.data;
     return [
       {
         id: 1,
-        name: "João Silva",
-        email: "joao@example.com",
-        cpf: "123.456.789-00",
-        phone: "(11) 98765-4321",
-        birthDate: "1990-01-15",
-        contractType: "CLT",
+        name: 'Caio',
+        email: 'john.doe@example.com',
+        cpf: '123.456.789-00',
+        phone: '(11) 99999-9999',
+        birthDate: '1990-01-01',
+        contractType: 'CLT',
         status: true,
       },
-    ]
+    ];
   },
   
   getById: async (id: number) => {
-    const response = await apiClient.get(`/employees/${id}`);
-    return response.data;
+    // const response = await apiClient.get(`/employees/${id}`);
+    // return response.data;
+    return {
+      id: 1,
+      name: 'Caio',
+      email: 'john.doe@example.com',
+      cpf: '123.456.789-00',
+      phone: '(11) 99999-9999',
+      birthDate: '1990-01-01',
+      contractType: 'CLT',
+      status: true,
+    };
   },
   
   create: async (employeeData: Employee) => {
