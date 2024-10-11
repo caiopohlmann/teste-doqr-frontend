@@ -54,6 +54,7 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ headers, employees, rowsP
         onEmployeeDeleted(employeeToDelete);
         closeDeleteDialog();
       } catch (error) {
+        console.error('Error deleting employee:', error);
       }
     }
   };

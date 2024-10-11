@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState, useEffect } from 'react';
+import {useState, useEffect } from 'react';
 import Plus from "@/assets/icons/Plus";
 import EmployeeTable from "@/components/EmployeeTable";
 import { employeeService } from "@/services/employeeService";
