@@ -18,7 +18,7 @@ Certifique-se de que o backend do projeto esteja rodando e o banco de dados este
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/teste-doqr-frontend.git
+   git clone git@github.com:caiopohlmann/teste-doqr-frontend.git
    cd teste-doqr-frontend
    ```
 
