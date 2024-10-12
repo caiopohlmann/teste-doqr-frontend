@@ -208,19 +208,17 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData = {}, onSubmit,
                   <select
                     id="status"
                     name="status"
-                    // @ts-expect-error - status is a boolean
-                    value={employee.status}
+                    value={employee.status === true ? 'active' : 'inactive'}
                     onChange={(e) => {
-                      setEmployee({ ...employee, status: e.target.value === 'active' })
-                      setIsStatusOpen(false)
+                      setEmployee({ ...employee, status: e.target.value === 'active' });
+                      setIsStatusOpen(false);
                     }}
-                    // @ts-expect-error - status is a boolean
-                    className={`mt-1 cursor-pointer appearance-none block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2 ${employee.status === '' ? 'text-[#B9B9C1] font-medium' : 'text-black'}`}
+                    className={`mt-1 cursor-pointer appearance-none block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2 ${employee.status === undefined ? 'text-[#B9B9C1] font-medium' : 'text-black'}`}
                     onFocus={() => setIsStatusOpen(true)}
                     onBlur={() => setIsStatusOpen(false)}
                     required
                   >
-                    <option value="" disabled selected className='text-gray-400'>Selecione uma opção...</option>
+                    <option value="" disabled className='text-gray-400'>Selecione uma opção...</option>
                     <option value="active" className='text-black'>Ativo</option>
                     <option value="inactive" className='text-black'>Inativo</option>
                   </select>
