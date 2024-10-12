@@ -27,6 +27,13 @@ Certifique-se de que o backend do projeto esteja rodando e o banco de dados este
    npm install
    ```
 
+3. Configure o arquivo `.env.local`:
+   Crie um arquivo `.env.local` na raiz do projeto e adicione a seguinte variável de ambiente:
+   ```
+   NEXT_PUBLIC_API_URL=http://localhost:5000/api
+   ```
+   Isso configura a URL da API para o endereço local do backend.   
+
 ## Executando o Projeto
 
 Antes de iniciar o frontend, certifique-se de que:
