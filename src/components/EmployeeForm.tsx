@@ -103,20 +103,20 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData = {}, onSubmit,
   };
 
   return (
-    <div className="flex flex-col px-32 pt-12">
-      <div className="flex items-center justify-between mt-8">
-        <div className="bg-white shadow-xl rounded-xl p-6 w-full">
+    <div className="flex flex-col px-4 sm:px-8 md:px-16 lg:px-32 pt-6 sm:pt-12">
+      <div className="flex items-center justify-between mt-4 sm:mt-8">
+        <div className="bg-white shadow-xl rounded-xl p-4 sm:p-6 w-full">
           <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
-                <label htmlFor="name" className="block text-base font-medium text-black">Nome</label>
+                <label htmlFor="name" className="block text-sm sm:text-base font-medium text-black">Nome</label>
                 <input
                   type="text"
                   id="name"
                   name="name"
                   value={employee.name}
                   onChange={handleInputChange}
-                  className={`mt-1 block w-full rounded-md shadow-sm border focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3 py-2 ${
+                  className={`mt-1 block w-full rounded-md shadow-sm border focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3 py-2 text-sm sm:text-base ${
                     errors.name ? 'border-red-500' : 'border-gray'
                   }`}
                   placeholder="Digite o nome do funcionário"
@@ -124,60 +124,60 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData = {}, onSubmit,
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-base font-medium text-black">Email</label>
+                <label htmlFor="email" className="block text-sm sm:text-base font-medium text-black">Email</label>
                 <input
                   type="email"
                   id="email"
                   name="email"
                   value={employee.email}
                   onChange={handleInputChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2 text-sm sm:text-base"
                   placeholder="Digite o email do funcionário"
                   required
                 />
               </div>
               <div>
-                <label htmlFor="cpf" className="block text-base font-medium text-black">CPF</label>
+                <label htmlFor="cpf" className="block text-sm sm:text-base font-medium text-black">CPF</label>
                 <input
                   type="text"
                   id="cpf"
                   name="cpf"
                   value={employee.cpf}
                   onChange={handleInputChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2 text-sm sm:text-base"
                   placeholder="000.000.000-00"
                   required
                   maxLength={14}
                 />
               </div>
               <div>
-                <label htmlFor="phone" className="block text-base font-medium text-black">Celular</label>
+                <label htmlFor="phone" className="block text-sm sm:text-base font-medium text-black">Celular</label>
                 <input
                   type="tel"
                   id="phoneNumber"
                   name="phoneNumber"
                   value={employee.phoneNumber}
                   onChange={handleInputChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2 text-sm sm:text-base"
                   placeholder="(99) 99999-9999"
                   required
                   maxLength={15}
                 />
               </div>
               <div>
-                <label htmlFor="birthDate" className="block text-base font-medium text-black">Data de Nascimento</label>
+                <label htmlFor="birthDate" className="block text-sm sm:text-base font-medium text-black">Data de Nascimento</label>
                 <input
                   type="date"
                   id="dateOfBirth"
                   name="dateOfBirth"
                   value={employee.dateOfBirth}
                   onChange={handleInputChange}
-                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2 ${employee.dateOfBirth === '' ? 'text-[#B9B9C1] font-medium' : 'text-black'}`}
+                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2 text-sm sm:text-base ${employee.dateOfBirth === '' ? 'text-[#B9B9C1] font-medium' : 'text-black'}`}
                   required
                 />
               </div>
               <div>
-                <label htmlFor="contractType" className="block text-base font-medium text-black">Tipo de Contratação</label>
+                <label htmlFor="contractType" className="block text-sm sm:text-base font-medium text-black">Tipo de Contratação</label>
                 <div className="relative">
                   <select
                     id="employmentType"
@@ -187,7 +187,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData = {}, onSubmit,
                       handleInputChange(e)
                       setIsContractTypeOpen(false)
                     }}
-                    className={`mt-1 cursor-pointer appearance-none block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2 ${employee.employmentType === '' ? 'text-[#B9B9C1] font-medium' : 'text-black'}`}
+                    className={`mt-1 cursor-pointer appearance-none block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2 text-sm sm:text-base ${employee.employmentType === '' ? 'text-[#B9B9C1] font-medium' : 'text-black'}`}
                     onFocus={() => setIsContractTypeOpen(true)}
                     onBlur={() => setIsContractTypeOpen(false)}
                     required
@@ -203,7 +203,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData = {}, onSubmit,
                 </div>
               </div>
               <div>
-                <label htmlFor="status" className="block text-base font-medium text-black">Status</label>
+                <label htmlFor="status" className="block text-sm sm:text-base font-medium text-black">Status</label>
                 <div className="relative">
                   <select
                     id="status"
@@ -213,7 +213,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData = {}, onSubmit,
                       setEmployee({ ...employee, status: e.target.value === 'active' });
                       setIsStatusOpen(false);
                     }}
-                    className={`mt-1 cursor-pointer appearance-none block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2 ${employee.status === undefined ? 'text-[#B9B9C1] font-medium' : 'text-black'}`}
+                    className={`mt-1 cursor-pointer appearance-none block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray px-3 py-2 text-sm sm:text-base ${employee.status === undefined ? 'text-[#B9B9C1] font-medium' : 'text-black'}`}
                     onFocus={() => setIsStatusOpen(true)}
                     onBlur={() => setIsStatusOpen(false)}
                     required
@@ -228,15 +228,15 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData = {}, onSubmit,
                   </div>
                 </div>
               </div>
-              <div className="col-span-3">
+              <div className="col-span-1 sm:col-span-2 lg:col-span-3 mt-4">
                 {isEditing && (
-                  <button onClick={onDeleteClick} type="button"  className="bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-300 mr-2">
+                  <button onClick={onDeleteClick} type="button" className="bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-300 mr-2 text-sm sm:text-base">
                     Excluir
                   </button>
                 )}
                 <button
                   type="submit"
-                  className="bg-primary disabled:bg-primary2 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-300"
+                  className="bg-primary disabled:bg-primary2 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-300 text-sm sm:text-base"
                 >
                   {isEditing ? 'Atualizar' : 'Cadastrar'}
                 </button>

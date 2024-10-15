@@ -66,14 +66,14 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ headers, employees, rowsP
 
   return (
     <div className="flex flex-col justify-between mt-3 overflow-x-auto overflow-hidden border border-gray rounded-lg min-h-[427px]">
-      <div>
+      <div className="overflow-x-auto">
         <table className="w-full border-collapse">
           <thead className="bg-grayTable">
             <tr>
               {headers.map((header, index) => (
                 <th 
                   key={index} 
-                  className={`p-4 text-left whitespace-nowrap text-gray font-bold text-base
+                  className={`p-2 sm:p-4 text-left whitespace-nowrap text-gray font-bold text-xs sm:text-sm md:text-base
                     ${index === 0 ? 'rounded-tl-lg' : ''}
                     ${index === headers.length - 1 ? 'rounded-tr-lg' : ''}`}
                 >
@@ -85,18 +85,18 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ headers, employees, rowsP
           <tbody>
             {currentEmployees.map((employee) => (
               <tr key={employee.id} className="border-b border-gray">
-                <td className="p-4 font-normal text-sm whitespace-nowrap">{employee.name}</td>
-                <td className="p-4 font-normal text-sm whitespace-nowrap">{employee.email}</td>
-                <td className="p-4 font-normal text-sm whitespace-nowrap">{employee.cpf}</td>
-                <td className="p-4 font-normal text-sm whitespace-nowrap">{employee.phoneNumber}</td>
-                <td className="p-4 font-normal text-sm whitespace-nowrap">{formatDate(employee.dateOfBirth)}</td>
-                <td className="p-4 font-normal text-sm whitespace-nowrap">{employee.employmentType}</td>
-                <td className="p-4 font-medium text-sm whitespace-nowrap">
-                  <span className={`${employee.status ? (employee.name === 'Caio Pohlmann' ? 'bg-primary text-white font-bold' : 'bg-greenTable text-greenTable') : 'bg-redTable text-redTable'} p-2 rounded-full`}>
+                <td className="p-2 sm:p-4 font-normal text-xs sm:text-sm whitespace-nowrap">{employee.name}</td>
+                <td className="p-2 sm:p-4 font-normal text-xs sm:text-sm whitespace-nowrap">{employee.email}</td>
+                <td className="p-2 sm:p-4 font-normal text-xs sm:text-sm whitespace-nowrap">{employee.cpf}</td>
+                <td className="p-2 sm:p-4 font-normal text-xs sm:text-sm whitespace-nowrap">{employee.phoneNumber}</td>
+                <td className="p-2 sm:p-4 font-normal text-xs sm:text-sm whitespace-nowrap">{formatDate(employee.dateOfBirth)}</td>
+                <td className="p-2 sm:p-4 font-normal text-xs sm:text-sm whitespace-nowrap">{employee.employmentType}</td>
+                <td className="p-2 sm:p-4 font-medium text-xs sm:text-sm whitespace-nowrap">
+                  <span className={`${employee.status ? (employee.name === 'Caio Pohlmann' ? 'bg-primary text-white font-bold' : 'bg-greenTable text-greenTable') : 'bg-redTable text-redTable'} p-1 sm:p-2 rounded-full`}>
                     {employee.status ? (employee.name === 'Caio Pohlmann' ? "Pendente" : "Ativo") : "Inativo"}
                   </span>
                 </td>
-                <td className="p-4">
+                <td className="p-2 sm:p-4">
                   <div className="flex gap-2">
                     <Link href={`/editar-funcionario/${employee.id}`} className="p-1 text-blue-600 hover:text-blue-800">
                       <Edit />
@@ -114,22 +114,22 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ headers, employees, rowsP
           </tbody>
         </table>
       </div>
-      <div className="flex justify-between items-center p-4 bg-grayTable">
-        <div className='text-gray font-bold text-base'>
+      <div className="flex flex-col sm:flex-row justify-between items-center p-2 sm:p-4 bg-grayTable">
+        <div className='text-gray font-bold text-sm sm:text-base mb-2 sm:mb-0'>
           Mostrando {startIndex + 1}-{Math.min(endIndex, employees.length)} de {employees.length}
         </div>
         <div className="flex gap-2">
           <button
             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className="bg-primary disabled:bg-primary2 text-white px-3 py-1 rounded disabled:opacity-50"
+            className="bg-primary disabled:bg-primary2 text-white px-2 sm:px-3 py-1 rounded disabled:opacity-50 text-sm sm:text-base"
           >
             Anterior
           </button>
           <button
             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
             disabled={currentPage === totalPages}
-            className="bg-primary disabled:bg-primary2 text-white px-3 py-1 rounded disabled:opacity-50"
+            className="bg-primary disabled:bg-primary2 text-white px-2 sm:px-3 py-1 rounded disabled:opacity-50 text-sm sm:text-base"
           >
             Próxima
           </button>
@@ -138,18 +138,18 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ headers, employees, rowsP
 
       {deleteDialogOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300 ease-in-out">
-          <div className="bg-white p-6 rounded-lg shadow-xl transform transition-all duration-300 ease-in-out scale-90 opacity-0 animate-dialog">
-            <h2 className="text-xl font-bold mb-4">Confirmar exclusão</h2>
-            <p className="mb-4">Tem certeza que deseja excluir este funcionário?</p>
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-xl transform transition-all duration-300 ease-in-out scale-90 opacity-0 animate-dialog max-w-xs sm:max-w-sm">
+            <h2 className="text-lg sm:text-xl font-bold mb-4">Confirmar exclusão</h2>
+            <p className="mb-4 text-sm sm:text-base">Tem certeza que deseja excluir este funcionário?</p>
             <div className="flex justify-end gap-2">
               <button
-                className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors"
+                className="px-3 sm:px-4 py-1 sm:py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors text-sm sm:text-base"
                 onClick={closeDeleteDialog}
               >
                 Cancelar
               </button>
               <button
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                className="px-3 sm:px-4 py-1 sm:py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors text-sm sm:text-base"
                 onClick={confirmDelete}
               >
                 Excluir

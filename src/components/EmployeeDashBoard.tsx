@@ -92,16 +92,21 @@ const EmployeeDashboard = () => {
     }
   };
 
-
   return (
-    <div className="flex flex-col px-32 pt-12">
-      <h1 className="text-4xl font-bold text-black m-0">Controle de Funcionários</h1>
-      <h2 className="text-xl font-bold text-black opacity-70 mt-2">Empresa DoQR Tecnologia</h2>
+    <div className="flex flex-col px-4 sm:px-8 md:px-16 lg:px-32 pt-6 sm:pt-12">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black m-0">Controle de Funcionários</h1>
+      <h2 className="text-lg sm:text-xl font-bold text-black opacity-70 mt-2">Empresa DoQR Tecnologia</h2>
 
-      <div className="flex items-center justify-between mt-8">
-        <input type="text" value={searchTerm} onChange={handleSearch} placeholder="Buscar Funcionário..." className="w-full max-w-96 py-2 pl-3 rounded-md border border-gray" />
+      <div className="flex flex-col sm:flex-row items-center justify-between mt-4 sm:mt-8 gap-4 sm:gap-0">
+        <input 
+          type="text" 
+          value={searchTerm} 
+          onChange={handleSearch} 
+          placeholder="Buscar Funcionário..." 
+          className="w-full sm:w-auto max-w-96 py-2 pl-3 rounded-md border border-gray"
+        />
 
-        <Link href="/cadastrar-funcionario" className="bg-primary text-white px-4 py-2 rounded-md ml-4 flex items-center gap-2">
+        <Link href="/cadastrar-funcionario" className="w-full sm:w-auto bg-primary text-white px-4 py-2 rounded-md flex items-center justify-center gap-2">
           <Plus />
           Novo Funcionário
         </Link>
